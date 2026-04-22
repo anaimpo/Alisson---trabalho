@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FRAMES — Cinema em Foco</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f2ede6;
+      --ink: #1a1612;
+      --accent: #d4522a;
+      --accent2: #3a6b8a;
+      --muted: #8a8278;
+      --card: #fff;
+      --border: rgba(26,22,18,0.14);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Outfit', sans-serif;
+    }
+
+    /* HEADER */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--ink);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5%;
+      height: 62px;
+    }
+
+    .logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.9rem;
+      letter-spacing: 0.12em;
+      color: var(--bg);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav { display: flex; align-items: center; gap: 2rem; }
+
+    nav a {
+      color: rgba(242,237,230,0.45);
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    nav a:hover, nav a.active { color: var(--bg); }
+
+    nav .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    /* HERO */
+    .hero {
+      background: var(--ink);
+      padding: 5rem 5% 4rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: end;
+      gap: 2rem;
+      border-bottom: 3px solid var(--accent);
+    }
+
+    .hero-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.2rem;
+    }
+
+    .hero h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(4rem, 10vw, 8rem);
+      line-height: 0.9;
+      color: var(--bg);
+      letter-spacing: 0.04em;
+    }
+
+    .hero h1 .outline {
+      -webkit-text-stroke: 2px var(--bg);
+      color: transparent;
+    }
+
+    .hero-right { padding-bottom: 0.4rem; }
+
+    .hero-count {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 5rem;
+      color: rgba(242,237,230,0.06);
+      letter-spacing: 0.04em;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-right p {
+      color: rgba(242,237,230,0.4);
+      font-size: 0.88rem;
+      line-height: 1.7;
+      max-width: 230px;
+    }
+
+    /* TICKER */
+    .ticker {
+      background: var(--accent);
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 0.55rem 0;
+    }
+
+    .ticker-track {
+      display: inline-block;
+      animation: scroll 20s linear infinite;
+    }
+
+    .ticker-track span {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.95rem;
+      letter-spacing: 0.18em;
+      color: #fff;
+      margin-right: 3rem;
+    }
+
+    .ticker-track span::before {
+      content: '◆';
+      margin-right: 0.8rem;
+      opacity: 0.6;
+    }
+
+    @keyframes scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* SECTION */
+    .section { padding: 4.5rem 5%; }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .section-label span {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* GRID */
+    .movies-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border: 1px solid var(--border);
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      position: relative;
+      transition: box-shadow 0.25s;
+      cursor: pointer;
+    }
+
+    .card:hover {
+      box-shadow: inset 0 0 0 2px var(--accent);
+      z-index: 2;
+    }
+
+    .card-poster {
+      position: relative;
+      aspect-ratio: 2/3;
+      overflow: hidden;
+    }
+
+    .card-poster img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: saturate(0.8);
+      transition: transform 0.5s, filter 0.4s;
+    }
+
+    .card:hover .card-poster img {
+      transform: scale(1.05);
+      filter: saturate(1);
+    }
+
+    .card-num {
+      position: absolute;
+      top: 10px; left: 10px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.08em;
+      background: var(--ink);
+      color: var(--bg);
+      padding: 2px 8px;
+    }
+
+    .card-score {
+      position: absolute;
+      bottom: 10px; right: 10px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 4px 9px;
+      border-radius: 2px;
+    }
+
+    .card-body {
+      padding: 1rem 1.2rem 1.4rem;
+      border-top: 2px solid var(--border);
+      transition: border-color 0.25s;
+    }
+
+    .card:hover .card-body { border-top-color: var(--accent); }
+
+    .card-meta {
+      font-size: 0.67rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.3rem;
+    }
+
+    .card-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.45rem;
+      letter-spacing: 0.05em;
+      color: var(--ink);
+      line-height: 1.1;
+      margin-bottom: 0.5rem;
+    }
+
+    .card-desc {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.6;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* QUOTE */
+    .quote-strip {
+      background: var(--accent2);
+      padding: 3.5rem 5%;
+      display: flex;
+      align-items: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .quote-strip blockquote {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      color: #fff;
+      letter-spacing: 0.04em;
+      line-height: 1.15;
+      flex: 1;
+    }
+
+    .quote-strip blockquote span { color: rgba(255,255,255,0.3); }
+
+    .quote-attr p {
+      color: rgba(255,255,255,0.45);
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--ink);
+      padding: 2rem 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    footer p { font-size: 0.8rem; color: rgba(242,237,230,0.3); }
+
+    footer a.nav-link {
+      color: rgba(242,237,230,0.4);
+      font-size: 0.8rem;
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    footer a.nav-link:hover { color: var(--bg); }
+
+    @media (max-width: 768px) {
+      .movies-grid { grid-template-columns: repeat(2, 1fr); }
+      .hero { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 480px) {
+      .movies-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" class="logo">FRA<span>MES</span></a>
+  <nav>
+    <div class="dot"></div>
+    <a href="index.html" class="active">Filmes</a>
+    <a href="contato.html">Contato</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div>
+    <p class="hero-label">Curadoria pessoal · 2025</p>
+    <h1>MEU<br><span class="outline">CINEMA</span><br>FAVORITO</h1>
+  </div>
+  <div class="hero-right">
+    <div class="hero-count">06</div>
+    <p>Seis filmes que me fizeram enxergar o mundo diferente.</p>
+  </div>
+</section>
+
+<div class="ticker">
+  <div class="ticker-track">
+    <span>DRAMA</span><span>FICÇÃO CIENTÍFICA</span><span>SUSPENSE</span>
+    <span>ANIMAÇÃO</span><span>AVENTURA</span><span>DOCUMENTÁRIO</span>
+    <span>TERROR</span><span>MUSICAL</span><span>AÇÃO</span>
+    <span>DRAMA</span><span>FICÇÃO CIENTÍFICA</span><span>SUSPENSE</span>
+    <span>ANIMAÇÃO</span><span>AVENTURA</span><span>DOCUMENTÁRIO</span>
+    <span>TERROR</span><span>MUSICAL</span><span>AÇÃO</span>
+  </div>
+</div>
+
+<section class="section">
+  <div class="section-label"><span>Minha Lista</span></div>
+
+  <div class="movies-grid">
+
+    <div class="card">
+      <div class="card-poster">
+        <img src="https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg" alt="The Dark Knight"/>
+        <span class="card-num">01</span>
+        <span class="card-score">★ 9.0</span>
+      </div>
+      <div class="card-body">
+        <p class="card-meta">Ação · 2008</p>
+        <h3 class="card-title">The Dark Knight</h3>
+        <p class="card-desc">Heath Ledger redefine o que um vilão pode ser. Nolan eleva o cinema de super-herói a tragédia grega.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-poster">
+        <img src="https://image.tmdb.org/t/p/w500/8b9gSBQp6iNFhCfNABkm0OtoSf5.jpg" alt="Aniquilação"/>
+        <span class="card-num">02</span>
+        <span class="card-score">★ 7.8</span>
+      </div>
+      <div class="card-body">
+        <p class="card-meta">Ficção Científica · 2018</p>
+        <h3 class="card-title">Aniquilação</h3>
+        <p class="card-desc">Alex Garland constrói um pesadelo bonito e perturbador sobre autodestruição e o desconhecido.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-poster">
+        <img src="https://image.tmdb.org/t/p/w500/c2Ax8Rox5g6CneChwy1idykaOhH.jpg" alt="Sociedade dos Poetas Mortos"/>
+        <span class="card-num">03</span>
+        <span class="card-score">★ 8.1</span>
+      </div>
+      <div class="card-body">
+        <p class="card-meta">Drama · 1989</p>
+        <h3 class="card-title">Sociedade dos Poetas Mortos</h3>
+        <p class="card-desc">Carpe diem. Robin Williams como professor que muda vidas — e nos lembra do preço da conformidade.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-poster">
+        <img src="https://image.tmdb.org/t/p/w500/pFlaoHTZeyNkG83vxsAJiGzfSsa.jpg" alt="La La Land"/>
+        <span class="card-num">04</span>
+        <span class="card-score">★ 8.0</span>
+      </div>
+      <div class="card-body">
+        <p class="card-meta">Musical · 2016</p>
+        <h3 class="card-title">La La Land</h3>
+        <p class="card-desc">Um musical que sabe que sonhos têm custo. Chazelle equilibra encantamento e melancolia com maestria.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-poster">
+        <img src="https://image.tmdb.org/t/p/w500/or06FN3Dka5tukK1e9sl16pB3iy.jpg" alt="Her"/>
+        <span class="card-num">05</span>
+        <span class="card-score">★ 8.0</span>
+      </div>
+      <div class="card-body">
+        <p class="card-meta">Romance · 2013</p>
+        <h3 class="card-title">Ela</h3>
+        <p class="card-desc">Spike Jonze cria a história de amor mais melancólica e honesta sobre solidão na era digital.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-poster">
+        <img src="https://image.tmdb.org/t/p/w500/iiZZdoQBEYBv6id8su7ImL0oCbD.jpg" alt="Moonlight"/>
+        <span class="card-num">06</span>
+        <span class="card-score">★ 7.4</span>
+      </div>
+      <div class="card-body">
+        <p class="card-meta">Drama · 2016</p>
+        <h3 class="card-title">Moonlight</h3>
+        <p class="card-desc">Barry Jenkins retrata uma vida em três atos — identidade, pertencimento e o silêncio entre as palavras.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="quote-strip">
+  <blockquote>
+    "O CINEMA É <span>A ARTE DE</span><br>
+    MOSTRAR O QUE AS <span>PALAVRAS</span><br>
+    NÃO CONSEGUEM DIZER."
+  </blockquote>
+  <div class="quote-attr">
+    <p>— Ingmar Bergman</p>
+  </div>
+</div>
+
+<footer>
+  <a href="index.html" class="logo" style="font-size:1.3rem;">FRA<span>MES</span></a>
+  <p>© 2025 · Uma curadoria pessoal de cinema</p>
+  <a href="contato.html" class="nav-link">Contato →</a>
+</footer>
+
+</body>
+</html>
