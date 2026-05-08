@@ -1,0 +1,15 @@
+const botoesVoltar = document.querySelectorAll(".btn-voltar");
+
+botoesVoltar.forEach(botao => {
+    botao.addEventListener("click", () => {
+        
+        // remove o passo atual
+        document.querySelector(".ativo").classList.remove("ativo");
+
+        // pega o passo para voltar
+        const passoVoltar = "passo-" + botao.getAttribute("data-voltar");
+
+        // ativa o passo anterior
+        document.getElementById(passoVoltar).classList.add("ativo");
+    });
+});
