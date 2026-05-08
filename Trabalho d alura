@@ -1,0 +1,23 @@
+<div class="objetivo">
+    <h3>Objetivo 2: Aprender Inglês</h3>
+
+    <div class="tempo">
+        <span>Tempo dedicado:</span>
+        <span id="tempo-ingles">0 horas</span>
+    </div>
+
+    <button onclick="adicionarTempoIngles(1)">
+        Adicionar 1 hora
+    </button>
+</div>
+
+<script>
+    let horasIngles = 0;
+
+    function adicionarTempoIngles(horas) {
+        horasIngles += horas;
+
+        document.getElementById("tempo-ingles").textContent =
+            horasIngles + " horas";
+    }
+</script
