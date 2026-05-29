@@ -1,0 +1,69 @@
+```txt
+meu-projeto/
+│
+├── index.html
+│
+├── css/
+│   └── style.css
+│
+├── js/
+│   └── script.js
+│
+├── assets/
+│   ├── logo.png
+│   ├── banner.jpg
+│   └── icone.svg
+│
+└── README.md
+```
+
+```html
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Projeto</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <h1>Projeto Organizado 🚀</h1>
+
+    <!-- Imagem -->
+    <img src="assets/logo.png" alt="Logo do projeto">
+
+    <!-- JavaScript -->
+    <script src="js/script.js"></script>
+
+</body>
+</html>
+```
+
+```css
+/* css/style.css */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    text-align: center;
+    padding: 40px;
+}
+
+h1 {
+    color: #2c3e50;
+}
+
+img {
+    width: 200px;
+}
+```
+
+```javascript
+// js/script.js
+
+console.log("Projeto carregado com sucesso!");
+```
